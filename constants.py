@@ -51,3 +51,18 @@ S_RASTER_N      = '\x1d\x76\x30\x00' # Set raster image normal size
 S_RASTER_2W     = '\x1d\x76\x30\x01' # Set raster image double width
 S_RASTER_2H     = '\x1d\x76\x30\x02' # Set raster image double height
 S_RASTER_Q      = '\x1d\x76\x30\x03' # Set raster image quadruple
+
+
+
+# Code Page Constants
+CP_ENGLISH =  '\x1b\x74\x00'      #PC437 (USA: Standard Europe)
+CP_KATAKANA = '\x1b\x74\x01'      #Katakana
+CP_MULTILINGUAL = '\x1b\x74\x02'  #PC850 (Multilingual)
+CP_PORTUGUESE = '\x1b\x74\x03'    #[PC860 (Portuguese)]
+CP_FRENCH = '\x1b\x74\x04'        #PC863 (Canadian-French)
+CP_NORDIC = '\x1b\x74\x05'        #PC865 (Nordic)
+CP_WINDOWS = '\x1b\x74\x16'           #WPC1252
+CP_CYRILLIC = '\x1b\x74\x17'      #PC866 (Cyrillic #2)
+CP_LATIN2 = '\x1b\x74\x18'        #PC852 (Latin 2)
+CP_EURO = '\x1b\x74\x19'          #PC858 (Euro)
+

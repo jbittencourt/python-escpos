@@ -29,6 +29,23 @@ class Escpos:
     """ ESC/POS Printer object """
     handle    = None
     device    = None
+    
+    inputEncoding = 'utf-8'
+    outputEncoding = 'ascii'
+    
+    
+    codePageEncoding = {
+          CP_ENGLISH:  'ascii',      #PC437 (USA: Standard Europe)
+          CP_KATAKANA: 'euc_jp',     #Katakana    (Not sure. need to find someone how knows this)
+          CP_MULTILINGUAL: 'cp850',  #PC850 (Multilingual)
+          CP_PORTUGUESE: 'cp860',    #[PC860 (Portuguese)]
+          CP_FRENCH: 'cp863',        #PC863 (Canadian-French)
+          CP_NORDIC: 'cp865',        #PC865 (Nordic)
+          CP_WINDOWS: 'cp1252',      #WPC1252
+          CP_CYRILLIC: 'cp866',      #PC866 (Cyrillic #2)
+          CP_LATIN2: 'cp852',        #PC852 (Latin 2)
+          CP_EURO: 'cp858'           #PC858 (Euro)
+    }
 
     def __init__(self, idVendor, idProduct, interface=0, in_ep=0x82, out_ep=0x01) :
         self.idVendor  = idVendor
@@ -92,6 +109,23 @@ class Escpos:
                 buffer = ""
                 cont = 0
 
+    def setInputEncoding(self, encoding):
+      '''Set the encoding your application is sending strings to the printer'''
+      self.inputEncoding = encoding
+      
+    def setOutputEncoding(self, encoding):
+      '''Set the encoding of the string being sent to the printer'''
+      self.outputEncoding = encoding
+      
+    def setPageCode(self, pageCode):
+      '''Send a Page Code command to the printer'''
+      self._raw(pageCode)
+      
+      
+      if pageCode in self.codePageEncoding:
+        self.outputEncoding = self.codePageEncoding[pageCode]
+
+      self._raw(pageCode)
 
     def image(self, img):
         """Parse image and then print it"""
@@ -198,7 +232,7 @@ class Escpos:
     def text(self, txt):
         """ Print alpha-numeric text """
         if txt:
-            self._raw(txt)
+            self._raw(txt.decode(self.inputEncoding).encode(self.outputEncoding))
         else:
             raise TextError()
 
