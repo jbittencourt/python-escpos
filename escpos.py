@@ -32,6 +32,7 @@ class Escpos:
     
     inputEncoding = 'utf-8'
     outputEncoding = 'ascii'
+    printingDisabled = False
     
     
     codePageEncoding = {
@@ -54,27 +55,29 @@ class Escpos:
         self.in_ep     = in_ep
         self.out_ep    = out_ep
 
+
         device_descriptor = DeviceDescriptor(self.idVendor, self.idProduct, self.interface)
         self.device = device_descriptor.get_device()
         if self.device is None:
             print "Cable isn't plugged in"
 
-	if self.device.is_kernel_driver_active(0):
-		try:
-			self.device.detach_kernel_driver(0)
-		except usb.core.USBError as e:
-			print "Could not detatch kernel driver: %s" % str(e)
+      	if self.device.is_kernel_driver_active(0):
+      		try:
+      			self.device.detach_kernel_driver(0)
+      		except usb.core.USBError as e:
+      			print "Could not detatch kernel driver: %s" % str(e)
 
-	try:
-		self.device.set_configuration()
-		self.device.reset()
-	except usb.core.USBError as e:
-		print "Could not set configuration: %s" % str(e)
+      	try:
+      		self.device.set_configuration()
+      		self.device.reset()
+      	except usb.core.USBError as e:
+      		print "Could not set configuration: %s" % str(e)
 
 
     def _raw(self, msg):
         """ Print any of the commands above, or clear text """
-        self.device.write(self.out_ep, msg, self.interface)
+        if not self.printingDisabled:
+          self.device.write(self.out_ep, msg, self.interface)
         
 
     def _check_image_size(self, size):
@@ -126,6 +129,26 @@ class Escpos:
         self.outputEncoding = self.codePageEncoding[pageCode]
 
       self._raw(pageCode)
+      
+
+    def disablePrinting(self):
+        """Don't send anything to the printer. Useful for debbuding purposes"""
+        self.printingDisabled = True
+        
+    def enablePrinting(self):
+        """Enables printing again."""
+        self.printingDisabled = True
+
+    def text(self, txt):
+        """ Print alpha-numeric text """
+        if txt:
+            self._raw(txt.encode(self.outputEncoding))
+        else:
+            raise TextError()
+
+    def textln(self, txt):
+        """Prints the text followed by a new line"""
+        self.text(txt + "\n")      
 
     def image(self, img):
         """Parse image and then print it"""
@@ -228,13 +251,7 @@ class Escpos:
         else:
             raise exception.BarcodeCodeError()
 
-        
-    def text(self, txt):
-        """ Print alpha-numeric text """
-        if txt:
-            self._raw(txt.decode(self.inputEncoding).encode(self.outputEncoding))
-        else:
-            raise TextError()
+
 
 
     def set(self, align='left', font='a', type='normal', width=1, height=1):
