@@ -6,6 +6,10 @@ CTL_FF    = '\x0c'             # Form feed
 CTL_CR    = '\x0d'             # Carriage return
 CTL_HT    = '\x09'             # Horizontal tab
 CTL_VT    = '\x0b'             # Vertical tab
+# Tab positioning 
+CLT_TAB_POSITIONS = "\x1B\x44"
+
+
 # Printer hardware
 HW_INIT   = '\x1b\x40'         # Clear data in buffer and reset modes
 HW_SELECT = '\x1b\x3d\x01'     # Printer select
@@ -23,8 +27,8 @@ TXT_2WIDTH      = '\x1b\x21\x20' # Double width text
 TXT_UNDERL_OFF  = '\x1b\x2d\x00' # Underline font OFF
 TXT_UNDERL_ON   = '\x1b\x2d\x01' # Underline font 1-dot ON
 TXT_UNDERL2_ON  = '\x1b\x2d\x02' # Underline font 2-dot ON
-TXT_BOLD_OFF    = '\x1b\x45\x00' # Bold font OFF
-TXT_BOLD_ON     = '\x1b\x45\x01' # Bold font ON
+TXT_BOLD_OFF    = '\x1B\x45\x00' # Bold font OFF
+TXT_BOLD_ON     = '\x1B\x45\x01' # Bold font ON
 TXT_FONT_A      = '\x1b\x4d\x00' # Font type A
 TXT_FONT_B      = '\x1b\x4d\x01' # Font type B
 TXT_ALIGN_LT    = '\x1b\x61\x00' # Left justification
@@ -38,6 +42,7 @@ BARCODE_TXT_BTH = '\x1d\x48\x03' # HRI barcode chars both above and below
 BARCODE_FONT_A  = '\x1d\x66\x00' # Font type A for HRI barcode chars
 BARCODE_FONT_B  = '\x1d\x66\x01' # Font type B for HRI barcode chars
 BARCODE_HEIGHT  = '\x1d\x68\x64' # Barcode Height [1-255]
+# BARCODE_HEIGHT  = '\x1dh' # Barcode Height [1-255]
 BARCODE_WIDTH   = '\x1d\x77\x03' # Barcode Width  [2-6]
 BARCODE_UPC_A   = '\x1d\x6b\x00' # Barcode type UPC-A
 BARCODE_UPC_E   = '\x1d\x6b\x01' # Barcode type UPC-E
@@ -46,6 +51,8 @@ BARCODE_EAN8    = '\x1d\x6b\x03' # Barcode type EAN8
 BARCODE_CODE39  = '\x1d\x6b\x04' # Barcode type CODE39
 BARCODE_ITF     = '\x1d\x6b\x05' # Barcode type ITF
 BARCODE_NW7     = '\x1d\x6b\x06' # Barcode type NW7
+BARCODE_CODE128 = '\x1d\x6b\x49' # Barcode type CODE128
+BARCODE_CODE128B = '\x7b\x42'    # Code128 character set B
 # Image format  
 S_RASTER_N      = '\x1d\x76\x30\x00' # Set raster image normal size
 S_RASTER_2W     = '\x1d\x76\x30\x01' # Set raster image double width
@@ -65,4 +72,5 @@ CP_WINDOWS = '\x1b\x74\x16'           #WPC1252
 CP_CYRILLIC = '\x1b\x74\x17'      #PC866 (Cyrillic #2)
 CP_LATIN2 = '\x1b\x74\x18'        #PC852 (Latin 2)
 CP_EURO = '\x1b\x74\x19'          #PC858 (Euro)
+
 

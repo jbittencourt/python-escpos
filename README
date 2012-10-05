@@ -119,10 +119,6 @@ In this case it is very important to setup the encoding which escpos will use to
 	
 For a list of available encodings, visit http://docs.python.org/library/codecs.html
 
-If your code sends strings to Epson.text in a different encoding than utf-8, please use 
-
-	Epson.setInputEncoding(encoding)
-
 ------------------------------------------------------------------
 6. Links
 

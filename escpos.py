@@ -207,11 +207,13 @@ class Escpos:
         # Height
         if height >=2 or height <=6:
             self._raw(BARCODE_HEIGHT)
+            # self._raw(chr(height))
         else:
             raise BarcodeSizeError()
         # Width
         if width >= 1 or width <=255:
             self._raw(BARCODE_WIDTH)
+            # self._raw(chr(width))
         else:
             raise BarcodeSizeError()
         # Font
@@ -365,3 +367,15 @@ class Escpos:
             # >> could not detach kernel driver from interface 0: No data available
             # >> No interface claimed
             time.sleep(1)
+            
+    def tab(self):
+        self.control("HT")
+
+    def setTabPositions(self, positions):
+        
+        cmd = CLT_TAB_POSITIONS
+        
+        for index, pos in enumerate(positions):
+            cmd +=chr(pos)
+            
+        self._raw(cmd+'\n')
