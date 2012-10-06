@@ -9,8 +9,8 @@ setup(name='escpos',
       author_email='juliano@hardfunstudios.com',
       url='https://github.com/jbittencourt/python-escpos',
       packages=['escpos'],
-      install_requires=[
-          "pyusb >= 1.0",
-          "PIL >= 1.1.7",
+      requires=[
+          "pyusb (>= 1.0)",
+          "PIL (>= 1.1.7)",
       ],
      )

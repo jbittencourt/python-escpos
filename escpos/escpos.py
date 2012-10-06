@@ -59,7 +59,7 @@ class Escpos:
         device_descriptor = DeviceDescriptor(self.idVendor, self.idProduct, self.interface)
         self.device = device_descriptor.get_device()
         if self.device is None:
-            print "Cable isn't plugged in"
+            raise DeviceError("Cable isn't plugged in")
 
       	if self.device.is_kernel_driver_active(0):
       		try:
@@ -71,7 +71,7 @@ class Escpos:
       		self.device.set_configuration()
       		self.device.reset()
       	except usb.core.USBError as e:
-      		print "Could not set configuration: %s" % str(e)
+            raise DeviceError("Could not set configuration: %s" % str(e))
 
 
     def _raw(self, msg):

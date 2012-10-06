@@ -22,6 +22,16 @@ class Error(Exception):
 # 40 = Image height is too large
 # 50 = No string supplied to be printed
 # 60 = Invalid pin to send Cash Drawer pulse
+# 70 = An error with the device happened
+
+
+
+class DeviceError(Error):
+    def __init__(self, msg="Error with the printer device"):
+        Error.__init__(self, msg)
+        self.msg = msg
+        self.resultcode = 70
+
 
 
 class BarcodeTypeError(Error):
